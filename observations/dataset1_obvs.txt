@@ -1,0 +1,10 @@
+Best - 
+
+RULE: [1, 0, '#', 1, '#', '#'] 1
+RULE: ['#', 1, 1, '#', '#', '#'] 1
+RULE: [0, 1, '#', '#', 1, '#'] 1
+RULE: [0, 0, '#', '#', '#', 1] 1
+RULE: ['#', '#', '#', '#', '#', '#'] 0
+
+mutation_probability=0.0125, 
+        crossover_probability=0.9, population_size=100, rule_count=5, epochs=400

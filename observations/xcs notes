@@ -1,0 +1,29 @@
+Environment:
+    - attributes and endpoints
+
+
+Population:
+    - Made up of classifiers
+
+Classifer:
+    - Rule -> The rule
+    - Numerosity
+    - Match_Count -> every time a rule matches one attrobute in an environment
+    - Correct_Count -> when it matches the attribute and endpoint 
+
+The Process:
+    - Assume the population starts at 0
+    - For training_instance in environment
+        - We find all of the classifiers that have rules that match the data set
+        - Matches = all_classifiers that match the training instance
+        - correct_set = all classifiers from match_set that have same action as training instance endpoint 
+        - Covering - IF there are no classifiers in your population that match your training instance  
+        - (Add a classifer into the population that does match the training instance
+        - When copying the training instance over then random chance for changing) this is called Covering
+    - Subsumption
+        - Remove all the classifieries that subsume each other
+
+Deletion
+    - Get the max population size by summing up the Numerosity of all of the classifiers in the 
+
+Look into XCS, incorporate this into the structure to improve the fitness. 

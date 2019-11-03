@@ -1,0 +1,47 @@
+data set 1 structure:
+RULE: [0, 1, '#', '#', 1, '#'] 1 = 18
+RULE: [0, 0, '#', '#', '#', 1] 1 = 1
+RULE: [1, 1, 1, '#', '#', '#'] 1 = 56
+RULE: [1, 0, '#', 1, '#', '#'] 1 = 36
+RULE: [0, 1, 1, '#', '#', 0] 1 = 24 
+RULE: ['#', '#', '#', '#', '#', '#'] 0
+
+
+Population 100 , 916 Generations, 0.9 crossover, 0.0125 mutation
+RULE: [0, 0, '#', '#', '#', 1] 1
+RULE: [1, 1, 1, '#', '#', '#'] 1
+RULE: [0, 1, '#', '#', 1, '#'] 1
+RULE: [1, 0, '#', 1, '#', '#'] 1
+RULE: ['#', '#', '#', '#', '#', '#'] 0
+    
+or 
+
+RULE: [1, 0, '#', 0, '#', '#'] 0 = 32
+RULE: [0, 1, '#', '#', 0, '#'] 0 = 16
+RULE: [1, '#', 0, 0, '#', '#'] 0 = 32
+RULE: [1, 1, 0, 1, '#', '#'] 0 = 52
+RULE: [0, 0, '#', '#', '#', 0] 0 = 0
+RULE: ['#', '#', '#', '#', '#', '#'] 1
+
+
+data set one has a tendency to hang on 46 with low rule count
+
+The rate of mutation seems to relate to convergence. If your average converges on a best individual
+too quickly then there is a convergence on a local maxima. 
+
+There is a relationship betwen the population size and the mutation rate and the length of the
+chromosome
+
+if you are converging on 44 say, by increasing your mutation you will have a more diverse range
+in the population, that means that there is a bigger differene between your best individual and the
+average of the population, but increasing it too much will not allow the best individual to reach 
+a high enough fitness.
+
+
+======================
+
+An indvidual has 60 rules in the chromosome and has a number of rules number generated between 1 and 60
+
+When we select, if fitness is greater select, else if they are the same select the one with a less 
+number of rules. Mutation only mutate rules up to amount of rules being used in the indvidual.
+
