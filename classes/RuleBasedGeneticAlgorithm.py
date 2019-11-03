@@ -1,9 +1,10 @@
-from Assignment.GeneticAlgorithmBase import GeneticAlgorithmBase, Individual
-from Assignment.Classes.rule import Rule
-from Assignment.Modules.data import initialise_data, draw_graph
-from Assignment.Modules.selection import tournament_selection
-from Assignment.Modules.crossover import one_point_crossover, two_point_crossover
-from Assignment.Modules.mutation import rule_based_mutate
+from Assignment.classes.GeneticAlgorithmBase import GeneticAlgorithmBase
+from Assignment.classes.rule import Rule
+from Assignment.classes.Individual import Individual
+from Assignment.modules.data import initialise_data, draw_graph
+from Assignment.modules.selection import tournament_selection
+from Assignment.modules.crossover import one_point_crossover, two_point_crossover
+from Assignment.modules.mutation import rule_based_mutate
 from copy import deepcopy
 import random
 

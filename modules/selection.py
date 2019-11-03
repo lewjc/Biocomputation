@@ -1,5 +1,5 @@
 import random
-from Assignment.Individual import Individual
+from Assignment.classes.Individual import Individual
 
 def tournament_selection(population):
     offspring = []

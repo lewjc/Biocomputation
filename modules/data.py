@@ -1,5 +1,5 @@
 import plotly.graph_objects as go
-from Assignment.Classes.BinaryData import BinaryData
+from Assignment.classes.BinaryData import BinaryData
 
 def draw_graph(generation_info, epochs, crossover_probability,
         mutation_probabilty, rule_count, population_size):

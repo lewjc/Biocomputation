@@ -1,9 +1,11 @@
-from Assignment.GeneticAlgorithm import RuleBasedGeneticAlgorithm
-import csv
+from Assignment.classes.RuleBasedGeneticAlgorithm import RuleBasedGeneticAlgorithm
+import os
 
 def main():
-
-    data = open_and_sanitize_data("Assignment/dataset1.txt")
+    
+    dirn = os.path.dirname(__file__)
+    data_path = os.path.join(dirn, "data/dataset1.txt")
+    data = open_and_sanitize_data(data_path)
     ga = RuleBasedGeneticAlgorithm(dataset=data, mutation_probability=0.0125, 
         crossover_probability=0.9, population_size=100, rule_count=5)
     ga.evolve(epochs=400)
