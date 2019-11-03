@@ -113,7 +113,7 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
     def __generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
         offspring = tournament_selection(deepcopy(population))
-        offspring = two_point_crossover(offspring, self._crossover_probability,
+        offspring = one_point_crossover(offspring, self._crossover_probability,
             self._chromosome_size)
 
         for individual in offspring:

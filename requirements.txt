@@ -12,3 +12,4 @@ rope==0.14.0
 six==1.11.0
 termcolor==1.1.0
 wrapt==1.10.11
+plotly==1.11.0
