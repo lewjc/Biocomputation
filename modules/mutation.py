@@ -1,5 +1,5 @@
 import random
-from Assignment.classes.Individual import Individual
+from classes.individual import Individual
 
 def bit_flip_mutate(individual: Individual, mutation_probabilty: float):
         idx = -1

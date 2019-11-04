@@ -1,5 +1,5 @@
 import plotly.graph_objects as go
-from Assignment.classes.BinaryData import BinaryData
+from classes.binary_data import BinaryData
 
 def draw_graph(generation_info, epochs, crossover_probability,
         mutation_probabilty, rule_count, population_size):
@@ -35,3 +35,10 @@ def initialise_data(dataset):
     
     return(data, feature_size, prediction_size)
 
+def open_and_sanitize_data(data_set_location):
+    with open(data_set_location, mode="r") as f:
+        data = f.readlines()
+        for i in range (len(data)):
+            line = data[i]
+            data[i] = line.strip("\n")
+        return data

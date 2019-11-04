@@ -1,17 +1,17 @@
-from Assignment.classes.GeneticAlgorithmBase import GeneticAlgorithmBase
-from Assignment.classes.rule import Rule
-from Assignment.classes.Individual import Individual
-from Assignment.modules.data import initialise_data, draw_graph
-from Assignment.modules.selection import tournament_selection
-from Assignment.modules.crossover import one_point_crossover, two_point_crossover
-from Assignment.modules.mutation import rule_based_mutate
+from classes.base_ga import GeneticAlgorithmBase
+from classes.rule import Rule
+from classes.individual import Individual
+from modules.data import initialise_data, draw_graph
+from modules.selection import tournament_selection
+from modules.crossover import one_point_crossover
+from modules.mutation import rule_based_mutate
 from copy import deepcopy
 import random
 
 
 class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
 
-    def __init__(self, dataset, population_size=10, 
+    def __init__(self, dataset:list, population_size=10, 
         mutation_probability=0.05, crossover_probability=1, rule_count=20):
         
         super().__init__(population_size=population_size, 
@@ -24,20 +24,19 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
         self._chromosome_size = self._rule_count * self._rule_size
         self._generation_info = []
         self._max_fitness = len(dataset)
-
         self.__initialise_population()        
 
 
     def __initialise_population(self):
         for i in range(self._population_size):
-            chromosome = self.__generate_chromosome()
+            chromosome = self._generate_chromosome()
             individual = Individual(i, chromosome=chromosome,
                 fitness=0) 
             self._population.insert(i, individual)
         self._generation = 1
 
 
-    def __generate_chromosome(self):
+    def _generate_chromosome(self):
         chromosome = []
         while len(chromosome) < self._chromosome_size:
             for i in range(self._feature_size):
@@ -49,32 +48,32 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
         return chromosome
     
 
-    def __evaluate_fitness(self, individual):        
+    def _evaluate_fitness(self, individual):        
         rules = Rule.generate_rules_from_chromosome(individual.chromosome, 
             self._feature_size, self._rule_size)
 
         for data in self._data:
             for rule in rules:
-                if(self.__does_rule_match_data(rule.feature, data.feature)):
+                if(self._does_rule_match_data(rule.feature, data.feature)):
                     if(rule.label == int(data.label)):
                         individual.fitness += 1                
                     break
     
 
-    def __does_rule_match_data(self, rule, data):        
+    def _does_rule_match_data(self, rule, data):        
         return all(a == str(b) or str(b) == '#' for a, b in zip(data, rule))
 
 
     def evolve(self, epochs=2000):    
         while(self._generation < epochs):
             for individual in self._population:
-                self.__evaluate_fitness(individual)
-            self.__display_population_fitness(self._population)
-            self._population = self.__generate_offspring(self._population)
+                self._evaluate_fitness(individual)
+            self._display_population_fitness(self._population)
+            self._population = self._generate_offspring(self._population)
             best = self._get_best_individual(self._population)
             if(best.fitness == self._max_fitness):
                 break
-            self.__reset_population_fitness(self._population)
+            self._reset_population_fitness(self._population)
             self._generation +=1 
             
         
@@ -89,20 +88,20 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
             self._mutation_probabilty, self._rule_count, self._population_size)    
 
     
-    def __display_population_fitness(self, population):
+    def _display_population_fitness(self, population):
         best_individual = super()._get_best_individual(population)
-        average_fitness = round(self.__get_average_fitness(population), 2)
+        average_fitness = round(self._get_average_fitness(population), 2)
         print("[Gen] {} [Average Fitness of Population] {} [Best Individual] {}".format(
             self._generation, average_fitness, best_individual.fitness))
         self._generation_info.append([self._generation, average_fitness, best_individual.fitness])
     
 
-    def __reset_population_fitness(self, population):
+    def _reset_population_fitness(self, population):
         for individual in population:
             individual.fitness = 0        
 
 
-    def __get_average_fitness(self, population):
+    def _get_average_fitness(self, population):
         fitness_total = 0
         for individual in population:
             fitness_total += individual.fitness
@@ -110,7 +109,7 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
         return fitness_total / self._population_size
      
 
-    def __generate_offspring(self, population):
+    def _generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
         offspring = tournament_selection(deepcopy(population))
         offspring = one_point_crossover(offspring, self._crossover_probability,
@@ -120,14 +119,14 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
             rule_based_mutate(individual, 
                 self._mutation_probabilty, self._rule_size)
 
-        worst_ind, worst_idx = self._get_worst_individual(population=self._population,
+        _, worst_idx = self._get_worst_individual(population=population,
             with_index=True)
 
         offspring[worst_idx] = best_individual
         return offspring
     
 
-    def __test_rules(self, rule_set):
+    def _test_rules(self, rule_set):
         total_rules_matched = 0
         for data in self._data:
             for rule in rule_set:
