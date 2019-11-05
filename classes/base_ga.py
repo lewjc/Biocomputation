@@ -1,4 +1,4 @@
-from Assignment.classes.Individual import Individual
+from classes.individual import Individual
 import random
 from copy import deepcopy
 

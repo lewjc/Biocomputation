@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
-from Assignment.classes.BinaryData import BinaryData
+from classes.floating_point_data import FloatingPointData
+from classes.binary_data import BinaryData
 
 def draw_graph(generation_info, epochs, crossover_probability,
         mutation_probabilty, rule_count, population_size):
@@ -15,7 +16,7 @@ def draw_graph(generation_info, epochs, crossover_probability,
         line=dict(color='firebrick', width=4)))
     figure.add_trace(go.Scatter(y=averages, x=generation, name="Average Population Fitness",
         line=dict(color='royalblue', width=4, dash='dot')))
-    title = 'Epoch: {}, Crossover: {}, Mutation: {}\nRule Count: {}, Population: {} '.format(
+    title = 'Epoch: {}, Crossover: {}, Mutation: {}, Rule Count: {}, Population: {} '.format(
         epochs, crossover_probability, mutation_probabilty,
         rule_count, population_size)
 
@@ -35,3 +36,22 @@ def initialise_data(dataset):
     
     return(data, feature_size, prediction_size)
 
+def initialise_floating_point_data(dataset):
+    data_props = dataset[0].split(" ")
+    amount_of_points = len(data_props) - 1
+    prediction_size = len(data_props[-1])
+    data = [] 
+    for row in dataset:
+        data_props = row.split(" ")
+        features = list(map(lambda x: float(x), data_props[:-1]))
+        data.append(FloatingPointData(features, int(data_props[-1])))
+    
+    return(data, amount_of_points, prediction_size)
+
+def open_and_sanitize_data(data_set_location):
+    with open(data_set_location, mode="r") as f:
+        data = f.readlines()
+        for i in range (len(data)):
+            line = data[i]
+            data[i] = line.strip("\n")
+        return data
