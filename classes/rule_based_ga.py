@@ -91,7 +91,7 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
     def _display_population_fitness(self, population):
         best_individual = super()._get_best_individual(population)
         average_fitness = round(self._get_average_fitness(population), 2)
-        print("[Gen] {} [Average Fitness of Population] {} [Best Individual] {}".format(
+        print("[Gen] {} [Average] {} [Best] {}".format(
             self._generation, average_fitness, best_individual.fitness))
         self._generation_info.append([self._generation, average_fitness, best_individual.fitness])
     
@@ -140,5 +140,3 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
                         print("Rule {} matched data {} but gave the wrong result.".format(rule.feature, data.feature))
                         break
         print("[TOTAL DATA POINTS CORRECTLY MATCHED => {}]".format(total_rules_matched))
-        
-

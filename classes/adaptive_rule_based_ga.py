@@ -20,6 +20,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
         self.MUTATION_CONST_ONE = 0.5
         self.MUTATION_CONST_TWO = 0.5
 
+
     def evolve(self, epoch=1000):
 
         while(self._generation < epoch):
@@ -42,6 +43,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
         draw_graph(self._generation_info, epoch, "Adaptive",
             "Adaptive", self._rule_count, self._population_size)    
 
+
     def __evaluate_population_fitness(self, population):
           for individual in population:
                 self._evaluate_fitness(individual)
@@ -50,8 +52,6 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
     def _generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
         average_fitness_of_population = self._get_average_fitness(population)
-        self.__adaptive_population(best_individual.fitness, average_fitness_of_population,
-            self._population_size)
         offspring = tournament_selection(deepcopy(population))
         offspring = self.__adaptive_crossover(offspring, average_fitness_of_population)
         self.__adaptive_mutation(offspring, average_fitness_of_population)        
@@ -72,7 +72,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
             self._max_fitness, average_fitness)
             chance = random.uniform(0, 1)
             if(chance <= crossover_probability):
-                parent_one, parent_two = do_two_point_crossover(parent_one, parent_two)
+                parent_one, parent_two = do_one_point_crossover(parent_one, parent_two)
 
             new_population.append(parent_one)
             new_population.append(parent_two)
@@ -100,9 +100,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
     
     def __calculate_mutation_probability(self, individual_fitness, max_fitness, 
         average_population_fitness):
-        individual_fitness = individual_fitness
-        max_fitness = max_fitness
-        average_population_fitness
+        
         if(individual_fitness >= average_population_fitness):
             calc = ((max_fitness - individual_fitness) / 
                 (max_fitness - average_population_fitness))
@@ -113,5 +111,5 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
     
     def __adaptive_population(self, best_fitness, 
         average_fitness, current_population_size):
-        new_pop_size = (current_population_size + (best_fitness /                         average_fitness) - 1)
+        new_pop_size = (current_population_size + (best_fitness / average_fitness) - 1)
         print("[NEW POPULATION SIZE] = {}".format(new_pop_size))

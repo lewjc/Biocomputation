@@ -1,8 +1,9 @@
 class Rule():
 
-    def __init__(self, feature, label):
+    def __init__(self, feature, label, match_count=0):
         self.feature = feature
         self.label = label
+        self.match_count = match_count
 
     @staticmethod
     def generate_rules_from_chromosome(chromosome, feature_size,
