@@ -23,10 +23,10 @@ def data_one(dirname):
     ga.evolve(epochs=2000)
 
 def data_two(dirname):
-    data_path = os.path.join(dirname, "data/dataset1.txt")
+    data_path = os.path.join(dirname, "data/dataset2.txt")
     data = open_and_sanitize_data(data_path)
     ga = ARBGA(dataset=data, mutation_probability=0.005,
-        population_size=60, rule_count=42)
+        population_size=100, rule_count=30)
     ga.evolve(epoch=5000)
 
 def data_three(dirname):
@@ -35,8 +35,8 @@ def data_three(dirname):
     training_set = data[0::2]
     test_set = data[1::2]
     ga = RuleBasedFloatingPointGA(dataset=training_set,test_data=test_set,
-        mutation_probability=0.02, crossover_probability=0.9, 
-        population_size=120, rule_count=20)
-    ga.evolve(epoch=2000)
+        mutation_probability=0.008, crossover_probability=0.9, 
+        population_size=100, rule_count=15)
+    ga.evolve(epoch=2500)
 
 main()

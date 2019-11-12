@@ -3,7 +3,7 @@ from modules.data import initialise_floating_point_data
 from classes.individual import Individual
 from classes.rule import Rule
 from modules.selection import tournament_selection
-from modules.crossover import one_point_crossover
+from modules.crossover import one_point_crossover, two_point_crossover
 from modules.mutation import floating_point_boundary_mutate
 from modules.data import draw_graph
 from copy import deepcopy
@@ -106,7 +106,7 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
     def _generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
         offspring = tournament_selection(deepcopy(population))
-        offspring = one_point_crossover(offspring, self._crossover_probability,
+        offspring = two_point_crossover(offspring, self._crossover_probability,
             self._chromosome_size)
 
         for individual in offspring:
@@ -160,13 +160,16 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
         overall_fitness = 0
         failed = 0
         for data in self._test_data:
+            data_matched = False
             for rule in finished_ruleset:
-                if(self._does_rule_match(data.feature, rule.feature) and
+                if(self._does_rule_match(data.features, rule.feature) and
                     data.prediction == rule.label):
                     overall_fitness += 1
+                    data_matched = True
                     break
+            if(not data_matched):
                 failed += 1 
 
-        percentage_passed =  len(self._test_set) / overall_fitness * 100
+        percentage_passed = (overall_fitness / len(self._train_data))  * 100
         print("TEST COMPLETE: PASSED: {} FAILED: {} | OVERALL: {}".format(
             overall_fitness, failed, percentage_passed))

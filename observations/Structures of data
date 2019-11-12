@@ -45,3 +45,7 @@ An indvidual has 60 rules in the chromosome and has a number of rules number gen
 When we select, if fitness is greater select, else if they are the same select the one with a less 
 number of rules. Mutation only mutate rules up to amount of rules being used in the indvidual.
 
+
+=======================
+
+Possibly 1 / length of chromosome * amount of rules

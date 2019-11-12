@@ -97,7 +97,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
             return (self.CROSSOVER_CONST_ONE * calc)
         else:
             return self.CROSSOVER_CONST_TWO
-            
+
     
     def __calculate_mutation_probability(self, individual_fitness, max_fitness, 
         average_population_fitness):
@@ -108,7 +108,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
             calc = calc * 1/max_fitness
             return(self.MUTATION_CONST_ONE * calc)
         else:
-            return self.x
+            return self.MUTATION_CONST_TWO
     
     def __adaptive_population(self, best_fitness, 
         average_fitness, current_population_size):
