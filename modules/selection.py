@@ -23,7 +23,7 @@ def tournament_selection(population):
             offspring.insert(i, parent_two)
         else:   
             choice = random.randint(0,1)
-            if(choice == 0):
+            if(choice):
                 offspring.insert(i, parent_one)
             else:
                 offspring.insert(i, parent_two)

@@ -32,6 +32,11 @@ def data_two(dirname):
 def data_three(dirname):
     data_path = os.path.join(dirname, "data/dataset3.txt")
     data = open_and_sanitize_data(data_path)
-    ga = RuleBasedFloatingPointGA(dataset=data, mutation_probability=0.1, 
-        crossover_probability=0.85, population_size=50, rule_count=10)
+    training_set = data[0::2]
+    test_set = data[1::2]
+    ga = RuleBasedFloatingPointGA(dataset=training_set,test_data=test_set,
+        mutation_probability=0.02, crossover_probability=0.9, 
+        population_size=120, rule_count=20)
+    ga.evolve(epoch=2000)
+
 main()

@@ -13,6 +13,7 @@ def bit_flip_mutate(individual: Individual, mutation_probabilty: float):
             else:
                 continue
 
+
 def rule_based_mutate(individual: Individual, 
     mutation_probability: float, rule_size: int):
     idx = -1
@@ -29,6 +30,7 @@ def rule_based_mutate(individual: Individual,
             
             individual.chromosome[idx] = cell            
 
+
 def floating_point_boundary_mutate(individual: Individual,
     mutation_probability: float, rule_size: int):
     idx = -1
@@ -42,28 +44,17 @@ def floating_point_boundary_mutate(individual: Individual,
                 individual.chromosome[idx] = gene
                 break            
             operator = -1 if random.randint(0, 1) else 1
-            mutation = random.uniform(0, 0.1) * operator if random.randint(0, 1) else '#'
-            if(isinstance(mutation, str)):
-                gene = ((gene[0], mutation) if random.randint(0, 1) else 
-                    (mutation, gene[1]))
-            else:
-                mutate_upper_bound = random.randint(0, 1)
-                if(mutate_upper_bound):
-                    ub = gene[1]
-                    mutated_boundary = (ub + mutation if isinstance(ub, float) else 
-                        (random.random() + mutation))
-                    new_bounds = [gene[0], mutated_boundary]
-                    if(any(isinstance(x, str) for x in new_bounds)):
-                        gene = ((new_bounds[0], new_bounds[1]))
-                    else:
-                        gene = ((min(new_bounds), max(new_bounds)))
-                else:
-                    ub = gene[0]
-                    mutated_boundary = (ub + mutation if isinstance(ub, float) 
-                        else random.random() + mutation)
-                    new_bounds = [mutated_boundary, gene[1]]
-                    if(any(isinstance(x, str) for x in new_bounds)):
-                        gene = ((new_bounds[0], new_bounds[1]))
-                    else:
-                        gene = ((min(new_bounds), max(new_bounds)))
-            
+            mutation = random.uniform(0.01, 0.12) * operator
+            mutate_upper_bound = random.randint(0, 1)
+            individual.chromosome[idx] = mutate_bound(mutate_upper_bound, gene, mutation)
+
+
+def mutate_bound(isUpper, gene, mutation):
+    bound = gene[1] if isUpper else gene[0]
+    if((bound + mutation) < 0 or (bound + mutation) > 1):
+        mutation *= -1
+    mutated_boundary = bound + mutation
+    new_bounds = [gene[0], mutated_boundary] if isUpper else [mutated_boundary, gene[1]]
+    gene = ((min(new_bounds), max(new_bounds)))
+    
+    return gene
