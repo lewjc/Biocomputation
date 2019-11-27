@@ -38,7 +38,8 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
 
         print("[BEST RULE BASE]")
         for rule in rules:
-            print("RULE: {} {}".format(rule.feature, rule.label))
+            rule.feature.append(rule.label)
+            print("{}".format(rule.feature))
 
         draw_graph(self._generation_info, epoch, "Adaptive",
             "Adaptive", self._rule_count, self._population_size)    

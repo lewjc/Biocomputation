@@ -13,7 +13,8 @@ import uuid
 class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
     
     def __init__(self, dataset, test_data, population_size=50,
-        mutation_probability=0.001, crossover_probability=0.8, rule_count=10):
+        mutation_probability=0.001, crossover_probability=0.8, rule_count=10,
+        seed_edge_cases=False):
         
         super().__init__(population_size=population_size,
             mutation_probability=mutation_probability,
@@ -28,10 +29,7 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
         self._initialise_population()
         self._generation_info = []
         self._max_fitness = len(self._train_data)
-        self.CROSSOVER_CONST_ONE = 1
-        self.CROSSOVER_CONST_TWO = 1
-        self.MUTATION_CONST_ONE = 0.5
-        self.MUTATION_CONST_TWO = 0.5
+        self._seed_edge_cases = seed_edge_cases
 
 
     def _initialise_population(self):
@@ -46,7 +44,7 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
         while len(chromosome) < self._chromosome_size:
             for i in range(self._feature_size):
                 gene = lambda : random.random()
-                bounds = list((gene(), gene()))
+                bounds = list((0, 1)) if self._seed_edge_cases else list(gene(), gene())
                 chromosome.append((min(bounds), max(bounds)))
 
             for j in range(self._label_size):
@@ -70,7 +68,7 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
         rules = Rule.generate_rules_from_chromosome(best.chromosome, self._feature_size, 
             self._rule_size)
 
-        print("[BEST RULE BASE]")
+        print("[BEST RULE BASE]\n")
         for rule in rules:
             print("RULE: {} {}".format(rule.feature, rule.label))
 
@@ -105,13 +103,16 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
 
     def _generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
-        offspring = tournament_selection(deepcopy(population))
+        offspring = tournament_selection(population)
         offspring = two_point_crossover(offspring, self._crossover_probability,
             self._chromosome_size)
 
         for individual in offspring:
             floating_point_boundary_mutate(individual, 
                 self._mutation_probabilty, self._rule_size)
+            individual.chromosome = (
+                individual.chromosome[:len(individual.chromosome)-self._rule_size] 
+                + individual.chromosome[:self._rule_size])
 
         _, worst_idx = self._get_worst_individual(population=population,
             with_index=True)
