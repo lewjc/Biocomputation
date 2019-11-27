@@ -105,7 +105,7 @@ class RuleBasedFloatingPointGA(GeneticAlgorithmBase):
 
     def _generate_offspring(self, population):
         best_individual = self._get_best_individual(population)
-        offspring = tournament_selection(deepcopy(population))
+        offspring = tournament_selection(population)
         offspring = two_point_crossover(offspring, self._crossover_probability,
             self._chromosome_size)
 
