@@ -6,8 +6,62 @@ RULE: [0, 1, '#', '#', 1, '#'] 1
 RULE: [0, 0, '#', '#', '#', 1] 1
 RULE: ['#', '#', '#', '#', '#', '#'] 0
 
-mutation_probability=0.0125, 
-        crossover_probability=0.9, population_size=100, rule_count=5, epochs=400
+if 4 and 32 and not 16 then 1 
+if 8 and 16 then 1
+if 2 and 16 and not 32 then 1
+if 1 and not 16 and not 32 then 1
+
+[1, 0                  '#', 1, '#', '#'] : 1
+[1, 1                  1, '#', '#', '#'] : 1
+[0, 0                  '#', '#', '#', 1] : 1
+[0, 1                  '#', '#', 1, '#'] : 1
+
+2  1
+0  0   = 1 
+0  1   = 2
+1  0   = 4
+1  1   = 8
+
+Why are the first 2 bits interesting?
+ - In every rule, the 16 and 32 bits are defined in every rule
+ the function is 
+
+0 = 1
+1 = 2
+2 = 4
+3 = 8
+
+x^2 
+
+
+y = 2^x where the first 2 bits are x and y = the defined bit in the last 4.
+
+The function that is showing is x^2.
+
+when y = 0,   x = 1
+when y = 16   x = 2
+when y = 32   x = 4
+when y = 64   x = 8
+
+y = 8x
+
+
+if 4 and not 16 and 32 then 1 
+if 32 and 16 and 8 then 1 
+if not 32 and not 16 and 1 then 1
+if not 32 and 16 and 2 then 1
+
+if 32 and not 16 and 4 then 1
+if 32 and 16 and 8 then 1
+if not 32 and not 16 and 1 then 1 
+if not 32 and 16 and 2 then 1
+
+ELSE 0 
+
+
+
+mutation_probability=0.0125,    
+        crossover_probability=0.9, population_size=100, rule_count=5, epoch=400
 
 one point crossover reliably hits the goal of 60 fitness, however 2 point crossover seems to 
 plateau at 52/53. I think that due to the size of the chromosome being generally quite small,

@@ -38,7 +38,8 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
 
         print("[BEST RULE BASE]")
         for rule in rules:
-            print("RULE: {} {}".format(rule.feature, rule.label))
+            rule.feature.append(rule.label)
+            print("{}".format(rule.feature))
 
         draw_graph(self._generation_info, epoch, "Adaptive",
             "Adaptive", self._rule_count, self._population_size)    
@@ -97,6 +98,7 @@ class AdaptiveRuleBasedGeneticAlgorithm(RuleBasedGeneticAlgorithm):
             return (self.CROSSOVER_CONST_ONE * calc)
         else:
             return self.CROSSOVER_CONST_TWO
+
     
     def __calculate_mutation_probability(self, individual_fitness, max_fitness, 
         average_population_fitness):

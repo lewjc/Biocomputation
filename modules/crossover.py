@@ -19,7 +19,6 @@ def do_one_point_crossover(parent_one: Individual, parent_two: Individual):
 def one_point_crossover(population: list, 
     crossover_probability: float, chromosome_size: int):
 
-    population = deepcopy(population)
     crossed_over_population = []     
     population_size = len(population)
     for i in range(0, population_size, 2):
@@ -65,9 +64,9 @@ def do_two_point_crossover(parent_one: Individual, parent_two: Individual):
     
     return (parent_one, parent_two)
 
+
 def two_point_crossover(population: list, crossover_probability: float,
     chromosome_size, invert=False):
-    population = deepcopy(population)
     crossed_over_population = []     
     population_size = len(population)
     for i in range(0, population_size, 2):
@@ -84,6 +83,7 @@ def two_point_crossover(population: list, crossover_probability: float,
         crossed_over_population.append(parent_two)
         
     return crossed_over_population
+
 
 def uniform_crossover(population, crossover_probability):
     crossed_over_population = []

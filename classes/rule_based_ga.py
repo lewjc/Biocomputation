@@ -73,7 +73,7 @@ class RuleBasedGeneticAlgorithm(GeneticAlgorithmBase):
             best = self._get_best_individual(self._population)
             if(best.fitness == self._max_fitness):
                 break
-            self._reset_population_fitness(self._population)
+            self._reset_population_fitness(  self._population)
             self._generation +=1 
             
         
